@@ -36,7 +36,7 @@ trap 'rm -rf "$TMPDIR"' EXIT
 #   SSH_KEY=/la/ou/est/la/ssh-key-partage
 #   MAX_LOG_DAYS=365   
 # shellcheck disable=SC1090
-. "$LDIR/config-get-partage-log"
+. "$LDIR/config-get-partage-logs"
 if [ -z "$LOGUSER" ]
 then
     echoerr "LOGUSER is not defined..."
