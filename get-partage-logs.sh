@@ -35,7 +35,7 @@ trap 'rm -rf "$TMPDIR"' EXIT
 #   DESTDIR_LOG_NG=/la/ou/tu/veux/tes/logs/partage
 #   SSH_KEY=/la/ou/est/la/ssh-key-partage
 #   MAX_LOG_DAYS=365   
-# shellcheck disable=SC1090
+# shellcheck disable=SC1090 disable=SC1091
 . "$LDIR/config-get-partage-logs"
 if [ -z "$LOGUSER" ]
 then
