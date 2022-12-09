@@ -6,3 +6,6 @@ DESTDIR_LOG_NG="/la/ou/sont/les/log/partage-renater"
 SSH_KEY="/la/ou/est/la/cle/ssh/partage-key"
 # Nombres de jours de logs à garder en local
 MAX_LOG_DAYS=365
+# Nombre de jours à rapatrier en local
+# 0 = tout prendre ; Les logs du jours sont toujours rapatriés
+GET_ONLY_DAYS=0

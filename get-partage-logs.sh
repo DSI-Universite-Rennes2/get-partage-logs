@@ -59,7 +59,13 @@ then
 fi
 
 # -----------------------------------------------------------------------------
+LFTP_OPTS=''
+if [ "$GET_ONLY_DAYS" -gt 0 ]
+then
+    LFTP_OPTS="--newer-than='now-${GET_ONLY_DAYS}days'"
+fi
 TODAY=$(date +%Y-%m-%d)
+mkdir -p "${DESTDIR_LOG_NG}/${TODAY}"
 cat <<EOF >> "$TMPDIR/lftp-script"
     set sftp:auto-confirm yes
     set sftp:connect-program "ssh -a -x -i $SSH_KEY"
@@ -68,7 +74,7 @@ cat <<EOF >> "$TMPDIR/lftp-script"
     #set xfer:log-file "/tmp/renater-partage-ng.log"
     open sftp://${LOGUSER}:FAKEPWD@${LOGHOST}:10022 
     # logs compressées
-    mirror --use-cache --continue --parallel=10 --scan-all-first --include=".*.log.gz" /logs/ ${DESTDIR_LOG_NG}/
+    mirror $LFTP_OPTS --use-cache --continue --parallel=10 --no-empty-dirs --include=".*.log.gz" /logs/ ${DESTDIR_LOG_NG}/
     # logs du jour
     lcd "${DESTDIR_LOG_NG}/${TODAY}"
     mget -c --parallel=10 /logs/${TODAY}/*.log
