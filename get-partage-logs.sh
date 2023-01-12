@@ -28,7 +28,30 @@ trap 'rm -rf "$TMPDIR"' EXIT
 
 # -----------------------------------------------------------------------------
 # Chargement de la configuration + verifications
-#
+usage() {
+    echoerr "Usage: $0 [-c <config file>]";
+    exit 1;
+}
+:
+configFile="$LDIR/config-get-partage-logs"
+while getopts ":c:" o; do
+    case "${o}" in
+        c)
+            configFile=${OPTARG}
+            ;;
+        *)
+            usage
+            ;;
+    esac
+done
+shift $((OPTIND-1))
+
+if [ ! -e "$configFile" ]
+then
+    echoerr "Configuration file does not exists : $configFile"
+    exit 1
+fi
+
 # Doit définir : 
 #   LOGUSER="leuser"
 #   LOGHOST="leserveurdelogdepartage.renater.fr"
@@ -36,7 +59,7 @@ trap 'rm -rf "$TMPDIR"' EXIT
 #   SSH_KEY=/la/ou/est/la/ssh-key-partage
 #   MAX_LOG_DAYS=365   
 # shellcheck disable=SC1090 disable=SC1091
-. "$LDIR/config-get-partage-logs"
+. "$configFile"
 if [ -z "$LOGUSER" ]
 then
     echoerr "LOGUSER is not defined..."
