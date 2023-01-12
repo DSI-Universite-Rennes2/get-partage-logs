@@ -114,7 +114,7 @@ find "${DESTDIR_LOG_NG}" -type f -name "*.log" -not -newer "$TMPDIR/yesterday" -
 RE_INT='^[0-9]+$'
 if [[ $MAX_LOG_DAYS =~ $RE_INT ]]
 then
-    find "${DESTDIR_LOG_NG}" -type f -name "*.log" -mtime +"${MAX_LOG_DAYS}"
+    find "${DESTDIR_LOG_NG}" -type f '(' -name "*.log" -o -name "*.log.gz" ')' -mtime +"${MAX_LOG_DAYS}"
 else
     echoerr "MAX_LOG_DAYS not defined or not a digit (${MAX_LOG_DAYS})"
 fi
