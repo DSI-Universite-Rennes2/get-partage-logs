@@ -32,7 +32,7 @@ usage() {
     echoerr "Usage: $0 [-c <config file>]";
     exit 1;
 }
-:
+
 configFile="$LDIR/config-get-partage-logs"
 while getopts ":c:" o; do
     case "${o}" in
