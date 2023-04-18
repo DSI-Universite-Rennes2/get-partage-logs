@@ -16,7 +16,7 @@ Vous pouvez ainsi lancer ce script autant de fois qu'il vous plaira et à la fr�
 
 ### Dépendance
 
-Vous devez avoir `lftp` installé sur votre système
+* `lftp` 4.8.0 ou +
 
 ### Configuration
 
