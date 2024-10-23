@@ -2,6 +2,7 @@
 # Configuration
 LOGUSER="votre user"
 LOGHOST="le.host.des.logs.partage"
+LOGPORT="10022"
 DESTDIR_LOG_NG="/la/ou/sont/les/log/partage-renater"
 SSH_KEY="/la/ou/est/la/cle/ssh/partage-key"
 # Nombres de jours de logs à garder en local

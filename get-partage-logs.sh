@@ -55,6 +55,7 @@ fi
 # Doit définir : 
 #   LOGUSER="leuser"
 #   LOGHOST="leserveurdelogdepartage.renater.fr"
+#   LOGPORT=10022
 #   DESTDIR_LOG_NG=/la/ou/tu/veux/tes/logs/partage
 #   SSH_KEY=/la/ou/est/la/ssh-key-partage
 #   MAX_LOG_DAYS=365   
@@ -95,7 +96,7 @@ cat <<EOF >> "$TMPDIR/lftp-script"
     set mirror:parallel-directories true
     #set xfer:log true
     #set xfer:log-file "/tmp/renater-partage-ng.log"
-    open sftp://${LOGUSER}:FAKEPWD@${LOGHOST}:10022 
+    open sftp://${LOGUSER}:FAKEPWD@${LOGHOST}:${LOGPORT:-10022} 
     # logs compressées
     mirror $LFTP_OPTS --use-cache --continue --parallel=10 --no-empty-dirs --include=".*.log.gz" /logs/ ${DESTDIR_LOG_NG}/
     # logs du jour
