@@ -98,10 +98,10 @@ cat <<EOF >> "$TMPDIR/lftp-script"
     #set xfer:log-file "/tmp/renater-partage-ng.log"
     open sftp://${LOGUSER}:FAKEPWD@${LOGHOST}:${LOGPORT:-10022} 
     # logs compressées
-    mirror $LFTP_OPTS --use-cache --continue --parallel=10 --no-empty-dirs --include=".*.log.gz" /logs/ ${DESTDIR_LOG_NG}/
+    mirror $LFTP_OPTS --use-cache --continue --parallel=10 --no-empty-dirs --include=".*.gz" /logs/ ${DESTDIR_LOG_NG}/
     # logs du jour
     lcd "${DESTDIR_LOG_NG}/${TODAY}"
-    mget -c --parallel=10 /logs/${TODAY}/*.log
+    mget -c --parallel=10 /logs/${TODAY}/*.*
     bye
 EOF
 lftp -f "$TMPDIR/lftp-script" > /dev/null
@@ -109,13 +109,13 @@ lftp -f "$TMPDIR/lftp-script" > /dev/null
 # Remove des .log plus vieux de 1 jours (Il y aura la version compressée)
 YESTERDAY=$(date -d "yesterday" '+%Y%m%d2359.59')
 touch -t "$YESTERDAY" "$TMPDIR/yesterday"
-find "${DESTDIR_LOG_NG}" -type f -name "*.log" -not -newer "$TMPDIR/yesterday" -delete
+find "${DESTDIR_LOG_NG}" -type f '(' -name "*.log" -o -name "*.json" ')' -not -newer "$TMPDIR/yesterday" -delete
 
 # Remove des logs plus vieux que MAX_LOG_DAYS
 RE_INT='^[0-9]+$'
 if [[ $MAX_LOG_DAYS =~ $RE_INT ]]
 then
-    find "${DESTDIR_LOG_NG}" -type f '(' -name "*.log" -o -name "*.log.gz" ')' -mtime +"${MAX_LOG_DAYS}" -delete
+    find "${DESTDIR_LOG_NG}" -type f '(' -name "*.log" -o -name "*.json" -o -name "*.gz" ')' -mtime +"${MAX_LOG_DAYS}" -delete
 else
     echoerr "MAX_LOG_DAYS not defined or not a digit (${MAX_LOG_DAYS})"
 fi
