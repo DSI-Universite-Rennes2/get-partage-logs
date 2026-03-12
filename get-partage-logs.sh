@@ -113,6 +113,11 @@ then
     do
         # handle the case of no *.json files
         [[ -e "$jfile" ]] || break
+
+        # skip already processed files
+        [[ "$jfile" == *-detectiveioc.json ]] && continue
+
+        # ignore "-detectiveioc.json"
         DEST_DIR="${DESTDIR_LOG_NG}/${TODAY}"
         DEST_FILENAME=$(basename "$jfile" | sed 's/\.json$/-detectiveioc.json/')
         DEST_FILE="${DEST_DIR}/${DEST_FILENAME}"
