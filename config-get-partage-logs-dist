@@ -10,3 +10,6 @@ MAX_LOG_DAYS=365
 # Nombre de jours à rapatrier en local
 # 0 = tout prendre ; Les logs du jours sont toujours rapatriés
 GET_ONLY_DAYS=0
+
+# Génération de fichiers pour detectiveIOC 0/1
+DETECTIVEIOC=0

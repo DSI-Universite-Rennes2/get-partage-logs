@@ -106,6 +106,24 @@ cat <<EOF >> "$TMPDIR/lftp-script"
 EOF
 lftp -f "$TMPDIR/lftp-script" > /dev/null
 
+# Generate JSON keys/values files for DetectiveIOC
+if [ "${DETECTIVEIOC:0}" -eq "1" ]
+then
+    for jfile in "${DESTDIR_LOG_NG}/${TODAY}"/*.json
+    do
+        # handle the case of no *.json files
+        [[ -e "$jfile" ]] || break
+        DEST_DIR="${DESTDIR_LOG_NG}/${TODAY}"
+        DEST_FILENAME=$(basename "$jfile" | sed 's/\.json$/-detectiveioc.json/')
+        DEST_FILE="${DEST_DIR}/${DEST_FILENAME}"
+        if ! jq -c '.|to_entries| .[]' "$jfile" > "$DEST_FILE"
+        then
+            echoerr "Error when processing $jfile for DetectiveIOC. Removing $DEST_FILENAME and continuing."
+            rm -f "$DEST_FILE"
+        fi
+    done
+fi
+
 # Remove des .log plus vieux de 1 jours (Il y aura la version compressée)
 YESTERDAY=$(date -d "yesterday" '+%Y%m%d2359.59')
 touch -t "$YESTERDAY" "$TMPDIR/yesterday"

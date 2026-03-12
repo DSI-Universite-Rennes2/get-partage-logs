@@ -17,6 +17,7 @@ Vous pouvez ainsi lancer ce script autant de fois qu'il vous plaira et à la fr�
 ### Dépendance
 
 * `lftp` 4.8.0 ou +
+* `jq` si vous activez l'option permettant la génération de fichier pour detectiveIOC 
 
 ### Configuration
 
