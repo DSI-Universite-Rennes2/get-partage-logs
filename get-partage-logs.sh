@@ -107,7 +107,7 @@ EOF
 lftp -f "$TMPDIR/lftp-script" > /dev/null
 
 # Generate JSON keys/values files for DetectiveIOC
-if [ "${DETECTIVEIOC:0}" -eq "1" ]
+if [ "${DETECTIVEIOC:-0}" -eq "1" ]
 then
     for jfile in "${DESTDIR_LOG_NG}/${TODAY}"/*.json
     do
