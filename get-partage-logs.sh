@@ -109,7 +109,7 @@ lftp -f "$TMPDIR/lftp-script" > /dev/null
 # Remove des .log plus vieux de 1 jours (Il y aura la version compressée)
 YESTERDAY=$(date -d "yesterday" '+%Y%m%d2359.59')
 touch -t "$YESTERDAY" "$TMPDIR/yesterday"
-find "${DESTDIR_LOG_NG}" -type f '(' -name "*.log" -o -name "*.json" ')' -not -newer "$TMPDIR/yesterday" -delete
+find "${DESTDIR_LOG_NG}" -type f '(' -name "*.log" ')' -not -newer "$TMPDIR/yesterday" -delete
 
 # Remove des logs plus vieux que MAX_LOG_DAYS
 RE_INT='^[0-9]+$'
